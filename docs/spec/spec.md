@@ -12,7 +12,7 @@ This document details our _Spec_ and _Status_ customizations.
 - [Source](#kind-source)
 - [Channel](#kind-channel)
 - [Subscription](#kind-subscription)
-- [Provider](#kind-provisioner)
+- [ClusterProvisioner](#kind-clusterprovisioner)
 
 ---
 
@@ -170,7 +170,7 @@ _Describes a linkage between a Subscribable and a Targetable and/or Sinkable._
 
 ---
 
-## kind: Provisioner
+## kind: ClusterProvisioner
 
 ### group: eventing.knative.dev/v1alpha1
 
