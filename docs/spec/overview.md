@@ -86,17 +86,25 @@ multiple _Subscriptions_.
 
 See [Kind: Channel](spec.md#kind-channel).
 
-## Provisioner
+## ClusterProvisioner
 
-**Provisioner** catalogs available implementations of event _Sources_ and
-_Channels_. _Provisioners_ hold a JSON Schema that is used to validate the
-_Source_ and _Channel_ input parameters. _Provisioners_ make it possible to
-provide cluster wide defaults for the _Sources_ and _Channels_ they provision.
+**ClusterProvisioners** are responsible for maintainig a catalog of available _Sources_ and _Channels_ and realizing them when required.
+ClusterProvisioners are not required to instantiate all dependent resources of a _Source_ or a _Channel_ but may instead interact with external systems.
+For example, the provisioner of a _Channel_ may interact with a message broker to create the required messaging endpoints, such as GC PubSub topics, rather than instantiating the message broker itself.
 
-_Provisioners_ do not directly handle events. They are 1:N with _Sources_ and
-_Channels_.
+_Sources_ and _Channels_ reference a ClusterProvisioner and can supply input arguments, eg. the URL of a message broker that a _Source_ will consume messages from. 
+These arguments are validated against a JSON Schema that the ClusterProvisioner can hold.
+The JSON Schema is also able to supply cluster wide defaults for the resources they create.
 
-For more details, see [Kind: ClusterProvisioner](spec.md#kind-clusterprovisioner).
+As an example, consider a _Source_ which connects Knative Eventing to an extenal email system.
+The developer of this _Source_ would write the application code for connecting via a suitable protocol (IMAP, SMTP, POP3,...) and package this into a container. 
+They would also write a _ClusterProvisioner_ which is able to deploy the container into Kubernetes.
+When a user provisions the _EmailSource_ they would provide connection arguments which the _ClusterProvisioner_ will use to configure the _Source_ (eg. mail servers, credentials, etc.). They can optionally supply a reference to an existing _Channel_ but if this is empty a new one will be created using the cluster/namespace defaults.
+
+_ClusterProvisioners_ do not directly handle events. 
+One ClusterProvisioner may be able to realize multiple _Channels_ and _Sources_ - they are 1:N.
+
+For more details, see [Kind: ClusterProvisioner](#kind-clusterprovisioner)
 
 ---
 
