@@ -11,7 +11,7 @@ This document details our _Spec_ and _Status_ customizations.
 
 - [Channel](#kind-channel)
 - [Subscription](#kind-subscription)
-- [Provider](#kind-provisioner)
+- [ChannelProvisioner](#kind-ChannelProvisioner)
 
 ## kind: Channel
 
@@ -36,7 +36,7 @@ Subscription's call parameter._
 
 ##### Owner References
 
-- Owned (non-controlling) by the ClusterProvisioner used to provision the
+- Owned (non-controlling) by the ChannelProvisioner used to provision the
   Channel.
 
 #### Status
@@ -60,9 +60,9 @@ Subscription's call parameter._
 
 | Action | Reactions                                                                                                                                                               | Limitations                                                                 |
 | ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| Create | The ClusterProvisioner referenced will take ownership of the Channel and begin provisioning the backing resources required for the Channel depending on implementation. | Only one ClusterProvisioner is allowed to be the Owner for a given Channel. |
-| Update | The ClusterProvisioner will synchronize the Channel backing resources to reflect the update.                                                                            |                                                                             |
-| Delete | The ClusterProvisioner will deprovision the backing resources if no longer required depending on implementation.                                                        |                                                                             |
+| Create | The ChannelProvisioner referenced will take ownership of the Channel and begin provisioning the backing resources required for the Channel depending on implementation. | Only one ChannelProvisioner is allowed to be the Owner for a given Channel. |
+| Update | The ChannelProvisioner will synchronize the Channel backing resources to reflect the update.                                                                            |                                                                             |
+| Delete | The ChannelProvisioner will deprovision the backing resources if no longer required depending on implementation.                                                        |                                                                             |
 
 ---
 
@@ -115,7 +115,7 @@ _Describes a linkage between a Channel and a Targetable and/or Sinkable._
 
 ---
 
-## kind: ClusterProvisioner
+## kind: ChannelProvisioner
 
 ### group: eventing.knative.dev/v1alpha1
 
@@ -137,7 +137,7 @@ or a Channel system that receives and delivers events._
 
 | Field      | Type       | Description                   | Limitations |
 | ---------- | ---------- | ----------------------------- | ----------- |
-| conditions | Conditions | ClusterProvisioner conditions |             |
+| conditions | Conditions | ChannelProvisioner conditions |             |
 
 ##### Conditions
 
@@ -175,7 +175,7 @@ or a Channel system that receives and delivers events._
 | -------- | ------ | ------------------------------------------------------------ | ----------- |
 | name\*   | String | Name of Object                                               |             |
 | type\*   | String | Fully Qualified Object type.                                 |             |
-| status\* | String | Current relationship between ClusterProvisioner and Object.  |             |
+| status\* | String | Current relationship between ChannelProvisioner and Object.  |             |
 | reason   | String | Detailed description describing current relationship status. |             |
 
 \*: Required
